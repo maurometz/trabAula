@@ -8,32 +8,37 @@ class DBConn {
 
     createTables() {
         var sql = `CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT)`;
+            "id" INTEGER,
+            "username"	TEXT,
+            "name"	TEXT,
+            "password"	TEXT,
+            "email"	TEXT,
+            PRIMARY KEY("id"))`;
 
         return this.db.run(sql);
     }
     
-    findAllEventos(callback) {
-
-        var sql = "SELECT * FROM users";
-        return this.db.all(sql, [], callback);
+    findAllUsers(callback) {
+        let sql = this.db.prepare(`SELECT * FROM users ORDER BY id`);
+        sql.run()
+        sql.finalize();
+        return callback();
 
     }
 
-    getEventoById(id, callback) {
-
-        var sql = "SELECT * FROM users WHERE id = (?)";
-        return this.db.get(sql, [id], callback);
+    getUserById(id, callback) {
+        let sql = this.db.prepare(`SELECT * FROM users WHERE id = (?)`);
+        sql.run(id)
+        sql.finalize();
+        return callback();
 
     }    
 
-    createEvento(name, username, password, email, callback) {
-
-        var sql = "INSERT INTO users (id, username, name, password, email) VALUES (?, ?, ?, ?, ?)";
-        // var sql = `INSERT INTO users (name, username, password, email) VALUES( '${name}', '${username}', '${password}', '${email}');`;
-        return this.db.run(sql, [`${name}, ${username}, ${password}, ${email}`], callback);
-
+    createUser(name, username, password, email, callback) {
+        let sql = this.db.prepare(`INSERT INTO users (username, name, password, email) VALUES (?, ?, ?, ?)`);
+        sql.run(name, username, password, email)
+        sql.finalize();
+        return callback();
     }
 
     deleteEvento(id, callback) {

@@ -5,14 +5,13 @@ var DBConn = require('../db-conn');
 var db = new DBConn();
 
 /* GET home page. */
-router.get('/', function(req, res, payload, next) {
+router.get('/', function(req, res, next) {
+  console.log('ENTROU EM GET EVENTOS /')
 
-  db.findAllEventos( (err, data) => {
-    //res.send(data);
-    res.render('eventos/index', { eventos: data });
+  db.findAllUsers( (err, data) => {
+    res.render('eventos/index', { users: data });
   });
 
-  //res.render('eventos/index');
 });
 
 /* GET home page. */
@@ -21,7 +20,6 @@ router.get('/novo', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-
   var errors = [];
 
   if (req.body.name == "") {
@@ -31,7 +29,7 @@ router.post('/', function(req, res, next) {
   }
 
   if (errors.length == 0) {
-    db.createEvento(req.body.name, req.body.username, req.body.email, req.body.password, (err, data) => {
+    db.createUser(req.body.name, req.body.username, req.body.email, req.body.password, (err, data) => {
       if (err) {
         next(err);
       } else {
@@ -46,7 +44,7 @@ router.post('/', function(req, res, next) {
 /* GET home page. */
 router.get('/:id', function(req, res, next) {
   //res.send(req.params);
-  db.getEventoById(req.params.id, (err, data) => {
+  db.getUserById(req.params.id, (err, data) => {
     if (err) {
       next(err);
     }

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Eventos</title>
+    <title>Usuarios</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1>Eventos</h1>
-    <p><a href="/eventos/novo">Novo Evento Show da Bola</a></p>
+    <h1>Usuários</h1>
+    <p><a href="/eventos/novo">Novo Usuário Show da Bola</a></p>
     <ul>
-      <% for(var i=0; i < eventos.length; i++) { %>
-        <li><a href="/eventos/<%= eventos[i].id %>"><%= eventos[i].nome %></a></li>
+      <% for(var i=0; i < users[i].id; i++) { %>
+        <li><a href="/eventos/<%= users[i].id %>"><%= users[i].name %></a></li>
       <% } %>
     </ul>
   </body>
