@@ -5,7 +5,7 @@ var DBConn = require('../db-conn');
 var db = new DBConn();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res, payload, next) {
 
   db.findAllEventos( (err, data) => {
     //res.send(data);
@@ -24,18 +24,17 @@ router.post('/', function(req, res, next) {
 
   var errors = [];
 
-  if (req.body.nome == "") {
+  if (req.body.name == "") {
     errors.push("Nome não informado");
-  } else if (req.body.nome.length < 3) {
+  } else if (req.body.name.length < 3) {
     errors.push("Nome deve conter pelo menos 3 caracteres.");
   }
 
   if (errors.length == 0) {
-    db.createEvento(req.body.nome, (err, data) => {
+    db.createEvento(req.body.name, req.body.username, req.body.email, req.body.password, (err, data) => {
       if (err) {
         next(err);
       } else {
-        //res.send('Novo evento criado:' + req.body.nome);
         res.redirect('/eventos');
       }
     });  

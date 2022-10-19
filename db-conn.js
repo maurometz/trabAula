@@ -7,37 +7,38 @@ class DBConn {
     }
 
     createTables() {
-        var sql = `CREATE TABLE IF NOT EXISTS eventos (
+        var sql = `CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nome TEXT NOT NULL)`;
+            nome TEXT)`;
 
         return this.db.run(sql);
     }
     
     findAllEventos(callback) {
 
-        var sql = "SELECT * FROM eventos";
+        var sql = "SELECT * FROM users";
         return this.db.all(sql, [], callback);
 
     }
 
     getEventoById(id, callback) {
 
-        var sql = "SELECT * FROM eventos WHERE id = (?)";
+        var sql = "SELECT * FROM users WHERE id = (?)";
         return this.db.get(sql, [id], callback);
 
     }    
 
-    createEvento(nome, callback) {
+    createEvento(name, username, password, email, callback) {
 
-        var sql = "INSERT INTO eventos (nome) VALUES (?)";
-        return this.db.run(sql, [nome], callback);
+        var sql = "INSERT INTO users (id, username, name, password, email) VALUES (?, ?, ?, ?, ?)";
+        // var sql = `INSERT INTO users (name, username, password, email) VALUES( '${name}', '${username}', '${password}', '${email}');`;
+        return this.db.run(sql, [`${name}, ${username}, ${password}, ${email}`], callback);
 
     }
 
     deleteEvento(id, callback) {
 
-        var sql = "DELETE FROM eventos WHERE ID = (?)";
+        var sql = "DELETE FROM users WHERE ID = (?)";
         return this.db.run(sql, [id], callback);
 
     }    
