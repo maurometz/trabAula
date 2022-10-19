@@ -41,11 +41,11 @@ class DBConn {
         return callback();
     }
 
-    deleteEvento(id, callback) {
-
-        var sql = "DELETE FROM users WHERE ID = (?)";
-        return this.db.run(sql, [id], callback);
-
+    deleteUser(id, callback) {
+        let sql = this.db.prepare(`DELETE FROM users WHERE ID = (?)`);
+        sql.run(id)
+        sql.finalize();
+        return callback();
     }    
 
 }

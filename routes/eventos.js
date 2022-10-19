@@ -6,8 +6,6 @@ var db = new DBConn();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log('ENTROU EM GET EVENTOS /')
-
   db.findAllUsers( (err, data) => {
     res.render('eventos/index', { users: data });
   });
@@ -59,7 +57,7 @@ router.get('/:id', function(req, res, next) {
 
 /* Rota para exclusão de um evento */
 router.post('/deletar/:id', function(req, res, next) {
-  db.deleteEvento(req.params.id, (err, data) => {
+  db.deleteUser(req.params.id, (err, data) => {
     if (err) {
       next(err);
     } else {
